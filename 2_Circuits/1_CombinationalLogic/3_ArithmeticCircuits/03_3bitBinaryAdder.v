@@ -3,15 +3,16 @@ module top_module(
     input cin,
     output [2:0] cout,
     output [2:0] sum );
-	
-    integer i;
-    assign sum[0] = a[0] ^ b[0] ^ cin;
-    assign cout[0] = (a[0] & b[0]) | (b[0] & cin) | (cin & a[0]);
+
+    Full_Adder FA1(a[0], b[0], cin, cout[0], sum[0]);
+    Full_Adder FA2(a[1], b[1], cout[0], cout[1], sum[1]);
+    Full_Adder FA3(a[2], b[2], cout[1], cout[2], sum[2]);
+endmodule
+
+module  Full_Adder(
+    input a, b, cin,
+    output cout, sum);
     
-    always @(*)begin
-        for (i=1; i<3; i++)begin
-            sum[i] = a[i] ^ b[i] ^ cout[i-1];
-            cout[i] = (a[i] & b[i]) | (b[i] & cout[i-1]) | (cout[i-1] & a[i]);
-        end
-    end
+    assign sum = a^b^cin;
+    assign cout = (a&b) | (b&cin) | (cin&a);
 endmodule
