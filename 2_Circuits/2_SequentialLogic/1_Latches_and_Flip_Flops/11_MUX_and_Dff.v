@@ -6,7 +6,6 @@ module top_module (
 	output reg Q);
 
     always @(posedge clk)begin
-        if (L) Q <= r_in;
-    	else Q <= q_in;
+        Q = L ? r_in:q_in;
     end
 endmodule
